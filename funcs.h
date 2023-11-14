@@ -1,0 +1,84 @@
+#ifndef FUNCS_H
+#define FUNCS_H
+
+/* Function prototypes */
+int shellInfo(PassInfo *, char **);
+int locateBuiltin(PassInfo *);
+void searchCmd(PassInfo *);
+void runCmdInBckgrnd(PassInfo *);
+int isValidCmd(PassInfo *, char *);
+char *copySubstring(char *, int, int);
+char *searchPath(PassInfo *, char *, char *);
+int loopshellInfo(char **);
+void putsErr(char *);
+int putErrChar(char);
+int putInfd(char c, int fd);
+int pritInfd(char *str, int fd);
+int _strlen(char *);
+int _strcmp(char *, char *);
+char *findPrefix(const char *, const char *);
+char *_strcat(char *, char *);
+char *_strcpy(char *, char *);
+char *_strdup(const char *);
+void _puts(char *);
+int _putchar(char);
+char *_strncpy(char *, char *, int);
+char *_strncat(char *, char *, int);
+char *_strchr(char *, char);
+char **splitString(char *, char *);
+char **splitString2(char *, char);
+char *_memset(char *, char, unsigned int);
+void ffree(char **);
+void *_realloc(void *, unsigned int, unsigned int);
+int bfree(void **);
+int interargctInfo(PassInfo *);
+int hasDelimiter(char, char *);
+int _isalpha(int);
+int _atoi(char *);
+int errAtoi(char *);
+void showError(PassInfo *, char *);
+int displayInt(int, int);
+char *numToStr(long int, int, int);
+void rmComments(char *);
+int _exitHsh(PassInfo *);
+int _cd(PassInfo *);
+int _showHelp(PassInfo *);
+int _showHistory(PassInfo *);
+int _showAlias(PassInfo *);
+ssize_t readInput(PassInfo *);
+int _getline(PassInfo *, char **, size_t *);
+void sigintHandler(int);
+void resetInfo(PassInfo *);
+void configInfo(PassInfo *, char **);
+void freeInfo(PassInfo *, int);
+char *_getenv(PassInfo *, const char *);
+int _showEnv(PassInfo *);
+int _setEnv(PassInfo *);
+int _unsetEnv(PassInfo *);
+int fillEnvList(PassInfo *);
+char **get_environ(PassInfo *);
+int _unsetenv(PassInfo *, char *);
+int _setenv(PassInfo *, char *, char *);
+char *retrieveHistoryFile(PassInfo *_data);
+int writeHistory(PassInfo *_data);
+int readHistory(PassInfo *_data);
+int buildHistoryList(PassInfo *_data, char *buf, int linecount);
+int renumbrber_history(PassInfo *_data);
+String_t *add_node(String_t **, const char *, int);
+String_t *add_node_end(String_t **, const char *, int);
+size_t printStrList(const String_t *);
+int delete_node_at_index(String_t **, unsigned int);
+void freeStrList(String_t **);
+size_t getLstLen(const String_t *);
+char **String_to_strings(String_t *);
+size_t prntLstSize(const String_t *);
+String_t *node_findPrefix(String_t *, char *, char);
+ssize_t get_node_index(String_t *, String_t *);
+int isChainValid(PassInfo *, char *, size_t *);
+void validateChain(PassInfo *, char *, size_t *, size_t, size_t);
+int updateAlias(PassInfo *);
+int updateVars(PassInfo *);
+int replaceStr(char **, char *);
+
+#endif /* FUNCS_H */
+
