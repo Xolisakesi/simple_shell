@@ -16,7 +16,7 @@ For this project, we expect you to look at these concepts:
 + [Unix shell](https://en.wikipedia.org/wiki/Unix_shell)
 + [Thompson shell](https://en.wikipedia.org/wiki/Thompson_shell)
 + [Ken Thompson](https://en.wikipedia.org/wiki/Ken_Thompson)
-+ [Everything you need to know to start coding your own shell concept page]()
++ ***Everything you need to know to start coding your own shell concept page***
 
 # Requirements
 ## General
@@ -24,10 +24,10 @@ For this project, we expect you to look at these concepts:
 + All your files will be compiled on Ubuntu 20.04 LTS using gcc, using the options -Wall -Werror -Wextra -pedantic -std=gnu89
 + All your files should end with a new line
 + A README.md file, at the root of the folder of the project is mandatory
-+ Your code should use the Betty style. It will be checked using betty-style.pl and betty-doc.pl
++ Your code should use the Betty style. It will be checked using **[betty-style.pl](https://github.com/alx-tools/Betty/blob/master/betty-style.pl)** and **[betty-doc.pl](https://github.com/alx-tools/Betty/blob/master/betty-doc.pl)**
 + Your shell should not have any memory leaks
 + No more than 5 functions per file
 + All your header files should be include guarded
 + Use system calls only when you need to (why?)
 + Write a README with the description of your project
-+ You should have an AUTHORS file at the root of your repository, listing all individuals having contributed content to the repository. Format, see Docker
++ You should have an AUTHORS file at the root of your repository, listing all individuals having contributed content to the repository. Format, see **[Docker](https://github.com/moby/moby/blob/master/AUTHORS)**
