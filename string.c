@@ -3,8 +3,8 @@
 
 /**
 * _strlen - returns the length of a string
-* @s: string whose length to check
-* Return: integer length of string
+* @s: string whose length is to be check
+* Return: integer length of the string
 */
 int _strlen(char *s)
 {
@@ -20,8 +20,8 @@ return (i);
 
 /**
 * _strcmp - performs comparison of two strangs.
-* @s1: first strang
-* @s2: second strang
+* @s1: first string
+* @s2: second string
 * Return: negative if s1 < s2, positive if s1 > s2, zero if s1 == s2
 */
 int _strcmp(char *s1, char *s2)
