@@ -11,8 +11,7 @@ int main(int argc, char **argv)
 {
 PassInfo _data[] = { DEFAULT_INFO };
 
-int fd = 2;
-
+int fd = STDERR_FILENO;
 fd = fd + 3;
 
 switch (argc)
