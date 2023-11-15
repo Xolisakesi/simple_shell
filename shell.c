@@ -27,14 +27,12 @@ switch (errno)
 case EACCES:
 exit(126);
 case ENOENT:
-putsErr(argv[0]);
-putsErr(": 0: Can't open ");
-putsErr(argv[1]);
-putErrChar('\n');
+putsErr(argv[0]), putsErr(": 0: Can't open ");
+putsErr(argv[1]), putErrChar(10);
 putErrChar(CLEAR_BUFFER);
 exit(127);
 default:
-return (EXIT_FAILURE);
+return (1);
 }
 }
 _data->fileDescriptor = fd;
@@ -43,8 +41,7 @@ break;
 default:
 break;
 }
-fillEnvList(_data);
-readHistory(_data);
+fillEnvList(_data), readHistory(_data);
 shellInfo(_data, argv);
 return (0);
 }
@@ -57,38 +54,38 @@ return (0);
 */
 int shellInfo(PassInfo *_data, char **argv)
 {
-ssize_t r = 0;
-int builtin_ret = 0;
+ssize_t size = 0;
+int retBltn = 0;
 
-while (r != -1 && builtin_ret != -2)
+while (size != -1 && retBltn != -2)
 {
 resetInfo(_data);
 if (interargctInfo(_data))
 _puts("$ ");
 putErrChar(CLEAR_BUFFER);
-r = readInput(_data);
-if (r != -1)
+size = readInput(_data);
+if (size != -1)
 {
 configInfo(_data, argv);
-builtin_ret = locateBuiltin(_data);
-if (builtin_ret == -1)
+retBltn = locateBuiltin(_data);
+if (retBltn == -1)
 searchCmd(_data);
 }
 else if (interargctInfo(_data))
-_putchar('\n');
+_putchar(10);
 freeInfo(_data, 0);
 }
 writeHistory(_data);
 freeInfo(_data, 1);
 if (!interargctInfo(_data) && _data->execStatus)
 exit(_data->execStatus);
-if (builtin_ret == -2)
+if (retBltn == -2)
 {
 if (_data->errorNumber == -1)
 exit(_data->execStatus);
 exit(_data->errorNumber);
 }
-return (builtin_ret);
+return (retBltn);
 }
 
 /**
@@ -101,7 +98,7 @@ return (builtin_ret);
 */
 int locateBuiltin(PassInfo *_data)
 {
-int i, built_in_ret = -1;
+int i, retBltn = -1;
 Builtin_f builtintbl[] = {
 {"exit", _exitHsh},
 {"env", _showEnv},
@@ -118,10 +115,10 @@ for (i = 0; builtintbl[i].type; i++)
 if (_strcmp(_data->argv[0], builtintbl[i].type) == 0)
 {
 _data->currentLine++;
-built_in_ret = builtintbl[i].fptr(_data);
+retBltn = builtintbl[i].fptr(_data);
 break;
 }
-return (built_in_ret);
+return (retBltn);
 }
 
 /**
@@ -172,22 +169,19 @@ showError(_data, "not found\n");
 */
 void runCmdInBckgrnd(PassInfo *_data)
 {
-pid_t child_pid;
+pid_t childPid = fork();
 
-child_pid = fork();
-if (child_pid == -1)
+if (childPid == -1)
 {
 perror("Error:");
 return;
 }
-if (child_pid == 0)
+if (childPid == 0)
 {
 if (execve(_data->path, _data->argv, get_environ(_data)) == -1)
 {
 freeInfo(_data, 1);
-if (errno == EACCES)
-exit(126);
-exit(1);
+exit(errno == EACCES ? 126 : 1);
 }
 }
 else
@@ -196,8 +190,10 @@ wait(&(_data->execStatus));
 if (WIFEXITED(_data->execStatus))
 {
 _data->execStatus = WEXITSTATUS(_data->execStatus);
+
 if (_data->execStatus == 126)
 showError(_data, "permission denied\n");
 }
 }
 }
+
