@@ -111,8 +111,7 @@ if (!index)
 {
 node = *head;
 *head = (*head)->next;
-free(node->str);
-free(node);
+free(node->str), free(node);
 return (1);
 }
 node = *head;
@@ -121,8 +120,7 @@ while (node)
 if (i == index)
 {
 prev_node->next = node->next;
-free(node->str);
-free(node);
+free(node->str), free(node);
 return (1);
 }
 i++;
@@ -148,8 +146,7 @@ node = head;
 while (node)
 {
 next_node = node->next;
-free(node->str);
-free(node);
+free(node->str), free(node);
 node = next_node;
 }
 *head_ptr = NULL;

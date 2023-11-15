@@ -36,13 +36,10 @@ return (result);
 */
 void showError(PassInfo *_data, char *estr)
 {
-putsErr(_data->ftype);
-putsErr(": ");
+putsErr(_data->ftype), putsErr(": ");
 displayInt(_data->currentLine, STDERR_FILENO);
-putsErr(": ");
-putsErr(_data->argv[0]);
-putsErr(": ");
-putsErr(estr);
+putsErr(": "), putsErr(_data->argv[0]);
+putsErr(": "), putsErr(estr);
 }
 
 /**

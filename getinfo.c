@@ -40,9 +40,7 @@ _data->argv[1] = NULL;
 for (i = 0; _data->argv && _data->argv[i]; i++)
 ;
 _data->argc = i;
-
-updateAlias(_data);
-updateVars(_data);
+updateAlias(_data), updateVars(_data);
 }
 }
 

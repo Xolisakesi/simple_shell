@@ -9,18 +9,18 @@
 */
 int unset_alias(PassInfo *_data, char *str)
 {
-char *p, c;
-int ret;
+char *ptr, c;
+int retrn;
 
-p = _strchr(str, '=');
-if (!p)
+ptr = _strchr(str, '=');
+if (!ptr)
 return (1);
-c = *p;
-*p = 0;
-ret = delete_node_at_index(&(_data->alias),
+c = *ptr;
+*ptr = 0;
+retrn = delete_node_at_index(&(_data->alias),
 get_node_index(_data->alias, node_findPrefix(_data->alias, str, -1)));
-*p = c;
-return (ret);
+*ptr = c;
+return (retrn);
 }
 
 /**
@@ -31,12 +31,12 @@ return (ret);
 */
 int set_alias(PassInfo *_data, char *str)
 {
-char *p;
+char *ptr;
 
-p = _strchr(str, '=');
-if (!p)
+ptr = _strchr(str, '=');
+if (!ptr)
 return (1);
-if (!*++p)
+if (!*++ptr)
 return (unset_alias(_data, str));
 
 unset_alias(_data, str);
@@ -50,16 +50,13 @@ return (add_node_end(&(_data->alias), str, 0) == NULL);
 */
 int print_alias(String_t *node)
 {
-char *p = NULL, *a = NULL;
+char *ptr = NULL, *a = NULL;
 
 if (node)
 {
-p = _strchr(node->str, '=');
-for (a = node->str; a <= p; a++)
-_putchar(*a);
-_putchar('\'');
-_puts(p + 1);
-_puts("'\n");
+ptr = _strchr(node->str, '=');
+for (a = node->str; a <= ptr; a++)
+_putchar(*a), _putchar('\''), _puts(ptr + 1), _puts("'\n");
 return (0);
 }
 return (1);
@@ -73,7 +70,7 @@ return (1);
 int _showAlias(PassInfo *_data)
 {
 int i = 0;
-char *p = NULL;
+char *ptr = NULL;
 String_t *node = NULL;
 
 if (_data->argc == 1)
@@ -88,8 +85,8 @@ return (0);
 }
 for (i = 1; _data->argv[i]; i++)
 {
-p = _strchr(_data->argv[i], '=');
-if (p)
+ptr = _strchr(_data->argv[i], '=');
+if (ptr)
 set_alias(_data, _data->argv[i]);
 else
 print_alias(node_findPrefix(_data->alias, _data->argv[i], '='));

@@ -17,8 +17,7 @@ if (exitcheck == -1)
 {
 _data->execStatus = 2;
 showError(_data, "Illegal interger: ");
-putsErr(_data->argv[1]);
-putErrChar('\n');
+putsErr(_data->argv[1]), putErrChar(10);
 return (1);
 }
 _data->errorNumber = errAtoi(_data->argv[1]);
@@ -54,11 +53,10 @@ else if (_strcmp(_data->argv[1], "-") == 0)
 {
 if (!_getenv(_data, "OLDPWD="))
 {
-_puts(s);
-_putchar('\n');
+_puts(s), _putchar(10);
 return (1);
 }
-_puts(_getenv(_data, "OLDPWD=")), _putchar('\n');
+_puts(_getenv(_data, "OLDPWD=")), _putchar(10);
 chdir_ret =
 chdir((dir = _getenv(_data, "OLDPWD=")) ? dir : "/");
 }
@@ -67,7 +65,7 @@ chdir_ret = chdir(_data->argv[1]);
 if (chdir_ret == -1)
 {
 showError(_data, "can't cd to ");
-putsErr(_data->argv[1]), putErrChar('\n');
+putsErr(_data->argv[1]), putErrChar(10);
 }
 else
 {
@@ -89,7 +87,7 @@ int _showHelp(PassInfo *_data)
 char **arg_array;
 
 arg_array = _data->argv;
-_puts("help call works. Function not yet implemented \n");
+_puts("Function not yet implemented \n");
 if (0)
 _puts(*arg_array);
 return (0);

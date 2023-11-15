@@ -42,7 +42,7 @@ int _setEnv(PassInfo *_data)
 {
 if (_data->argc != 3)
 {
-putsErr("Incorrect numbrber of arguements\n");
+putsErr("Incorrect number of arguements\n");
 return (1);
 }
 if (_setenv(_data, _data->argv[1], _data->argv[2]))

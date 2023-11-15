@@ -88,12 +88,12 @@ return (i);
 */
 String_t *node_findPrefix(String_t *node, char *prefix, char c)
 {
-char *p = NULL;
+char *ptr = NULL;
 
 while (node)
 {
-p = findPrefix(node->str, prefix);
-if (p && ((c == -1) || (*p == c)))
+ptr = findPrefix(node->str, prefix);
+if (ptr && ((c == -1) || (*ptr == c)))
 return (node);
 node = node->next;
 }
@@ -108,14 +108,14 @@ return (NULL);
 */
 ssize_t get_node_index(String_t *head, String_t *node)
 {
-size_t i = 0;
+size_t size = 0;
 
 while (head)
 {
 if (head == node)
-return (i);
+return (size);
 head = head->next;
-i++;
+size++;
 }
 return (-1);
 }

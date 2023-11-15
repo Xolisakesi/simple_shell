@@ -34,18 +34,17 @@ return (s);
 
 /**
 * ffree - frees a string of strings
-* @pp: string of strings
+* @p: string of strings
 * Returns: void nothing
 */
-void ffree(char **pp)
+void ffree(char **p)
 {
-char **a = pp;
+char **a = p;
 
-if (!pp)
+if (!p)
 return;
-while (*pp)
-free(*pp++);
-free(a);
+while (*p)
+free(*p++), free(a);
 }
 
 /**

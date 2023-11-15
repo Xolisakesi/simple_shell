@@ -18,8 +18,7 @@ buf = malloc(sizeof(char) * (_strlen(dir) + _strlen(HSH_HIST) + 2));
 if (!buf)
 return (NULL);
 buf[0] = 0;
-_strcpy(buf, dir);
-_strcat(buf, "/");
+_strcpy(buf, dir), _strcat(buf, "/");
 _strcat(buf, HSH_HIST);
 return (buf);
 }
@@ -44,12 +43,8 @@ free(filetype);
 if (fd == -1)
 return (-1);
 for (node = _data->history; node; node = node->next)
-{
-pritInfd(node->str, fd);
-putInfd('\n', fd);
-}
-putInfd(CLEAR_BUFFER, fd);
-close(fd);
+pritInfd(node->str, fd), putInfd('\n', fd);
+putInfd(CLEAR_BUFFER, fd), close(fd);
 return (1);
 }
 
