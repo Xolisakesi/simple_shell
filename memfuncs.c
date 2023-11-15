@@ -44,7 +44,8 @@ char **a = p;
 if (!p)
 return;
 while (*p)
-free(*p++), free(a);
+free(*p++); 
+free(a);
 }
 
 /**
