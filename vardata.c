@@ -2,70 +2,57 @@
 #include "funcs.h"
 
 /**
-* isChainValid - test if current char in buffer is a
-* chain delimeter
-* @_data: parameter struct
-* @buf: char buffer
-* @p: pointer to current position in buf
-* Return: 1 if chain delimeter, 0 otherwise
+ * isChainValid - Checks and updates command chaining
+ * type based on buf content.
+ *@_data: Pointer to PassInfo struct for command information.
+ *@buf: Input buffer to analyze.
+ *@ptr: Pointer to size_t.
+ *Return: 1 if a valid chaining operator is found, 0 otherwise.
 */
-int isChainValid(PassInfo *_data, char *buf, size_t *p)
-{
-size_t j = *p;
 
-if (buf[j] == '|' && buf[j + 1] == '|')
+int isChainValid(PassInfo *_data, char *buf, size_t *ptr)
 {
-buf[j] = 0;
-j++;
+size_t len = *ptr;
+
+if (buf[len] == '|' && buf[len + 1] == '|')
+{
+buf[len++] = 0;
 _data->cmdBuffer_type = OR_OPER_CMD;
 }
-else if (buf[j] == '&' && buf[j + 1] == '&')
+else if (buf[len] == '&' && buf[len + 1] == '&')
 {
-buf[j] = 0;
-j++;
+buf[len++] = 0;
 _data->cmdBuffer_type = AND_OPER_CMD;
 }
-else if (buf[j] == ';')
+else if (buf[len] == ';')
 {
-buf[j] = 0;
+buf[len++] = 0;
 _data->cmdBuffer_type = CHAINING_CMD;
 }
 else
 return (0);
-*p = j;
+
+*ptr = len;
 return (1);
 }
 
 /**
-* validateChain - checks we should continue chaining
-* based on last execStatus
-* @_data: parameter struct
-* @buf: the char buffer
-* @p: address of current position in buf
-* @i: starting position in buf
-* @len: length of buf
-* Return: Void
+* validateChain - Updates buffer based on command
+* chaining type and execution status.
+* @_data: Pointer to PassInfo struct for command information.
+* @buf: Input buffer to modify.
+* @p: Pointer to size_t, updated position in the buffer.
+* @i: Current index in the buffer.
+* @len: Length of the buffer.
 */
 void validateChain(PassInfo *_data, char *buf, size_t *p, size_t i, size_t len)
 {
 size_t j = *p;
 
-if (_data->cmdBuffer_type == AND_OPER_CMD)
-{
-if (_data->execStatus)
-{
-buf[i] = 0;
-j = len;
-}
-}
-if (_data->cmdBuffer_type == OR_OPER_CMD)
-{
-if (!_data->execStatus)
-{
-buf[i] = 0;
-j = len;
-}
-}
+if (_data->cmdBuffer_type == AND_OPER_CMD && _data->execStatus)
+buf[i] = 0, j = len;
+else if (_data->cmdBuffer_type == OR_OPER_CMD && !_data->execStatus)
+buf[i] = 0, j = len;
 
 *p = j;
 }
@@ -104,37 +91,26 @@ return (1);
 * @_data: parameter struct
 * Return: 1 if replargced, 0 otherwise
 */
+
 int updateVars(PassInfo *_data)
 {
-int i = 0;
-String_t *node;
-
+int i;
 for (i = 0; _data->argv[i]; i++)
 {
 if (_data->argv[i][0] != '$' || !_data->argv[i][1])
 continue;
-
 if (!_strcmp(_data->argv[i], "$?"))
+replaceStr(&(_data->argv[i]), _strdup(numToStr(_data->execStatus, 10, 0)));
+else if (!_strcmp(_data->argv[i], "$$"))
+replaceStr(&(_data->argv[i]), _strdup(numToStr(getpid(), 10, 0)));
+else
 {
-replaceStr(&(_data->argv[i]),
-_strdup(numToStr(_data->execStatus, 10, 0)));
-continue;
-}
-if (!_strcmp(_data->argv[i], "$$"))
-{
-replaceStr(&(_data->argv[i]),
-_strdup(numToStr(getpid(), 10, 0)));
-continue;
-}
-node = node_findPrefix(_data->env, &_data->argv[i][1], '=');
+String_t *node = node_findPrefix(_data->env, &_data->argv[i][1], '=');
 if (node)
-{
-replaceStr(&(_data->argv[i]),
-_strdup(_strchr(node->str, '=') + 1));
-continue;
-}
+replaceStr(&(_data->argv[i]), _strdup(_strchr(node->str, '=') + 1));
+else
 replaceStr(&_data->argv[i], _strdup(""));
-
+}
 }
 return (0);
 }

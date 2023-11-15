@@ -107,5 +107,5 @@ typedef struct BuiltinFunction
 char *type;
 int (*fptr)(PassInfo *);
 } Builtin_f;
-
+#include "funcs.h"
 #endif
